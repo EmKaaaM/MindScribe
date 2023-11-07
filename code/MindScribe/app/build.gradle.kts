@@ -7,6 +7,7 @@ sonar {
     properties {
         property("sonar.projectKey", "EmKaaaM_MindScribe")
         property("sonar.organization", "team13")
+        property("sonar.gradle.skipCompile", "true")
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
