@@ -1,7 +1,15 @@
 plugins {
     id("com.android.application")
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
+sonar {
+    properties {
+        property("sonar.projectKey", "EmKaaaM_MindScribe")
+        property("sonar.organization", "team13")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
 android {
     namespace = "com.example.mindscribe"
     compileSdk = 34
