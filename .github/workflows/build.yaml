@@ -32,15 +32,11 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./code/MindScribe/gradlew
-      - name: Change directory
-        run: cd ./code/MindScribe
-      - name: Check for settings.gradle or settings.gradle.kts
-        run: ls -la
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-        cd ./code/MindScribe
-        ls -la
-        ./gradlew build sonar --info
+          ls -la
+          ./gradlew build sonar --info
+        working-directory: ./code/MindScribe
