@@ -33,11 +33,11 @@ jobs:
       - name: Change to Mindscribe directory
         run: cd code/MindScribe
       - name: Grant execute permission for gradlew
-        run: chmod +x ./code/MindScribe/gradlew
-        working-directory: ./code/MindScribe
+        run: chmod +x code/MindScribe/gradlew
+        working-directory: code/MindScribe
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonar --info
-        working-directory: ./code/MindScribe
+        working-directory: code/MindScribe
