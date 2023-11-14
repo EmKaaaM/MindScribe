@@ -30,14 +30,14 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle
-    # Navigate to the code/Mindscribe directory
       - name: Change to Mindscribe directory
-        run: cd code/Mindscribe        
+        run: cd code/Mindscribe
       - name: Grant execute permission for gradlew
         run: chmod +x ./code/MindScribe/gradlew
+        working-directory: ./code/Mindscribe
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          working-directory: ./code/Mindscribe
-          run: ./gradlew build sonar --info
+        run: ./gradlew build sonar --info
+        working-directory: ./code/Mindscribe
