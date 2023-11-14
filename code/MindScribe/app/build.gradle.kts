@@ -1,7 +1,15 @@
 plugins {
     id("com.android.application")
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
+sonar {
+    properties {
+        property("sonar.projectKey", "MindScribe")
+        property("sonar.organization", "team13")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
 android {
     namespace = "com.example.mindscribe"
     compileSdk = 34
@@ -23,8 +31,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
