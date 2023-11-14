@@ -1,5 +1,16 @@
 plugins {
     id("com.android.application")
+    id("org.sonarqube") version "4.4.1.3373"
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "EmKaaaM_MindScribe")
+        property("sonar.organization", "team13")
+//        property("sonar.gradle.skipCompile", "true")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sources", listOf("code/MindScribe"))
+    }
 }
 
 android {
