@@ -5,14 +5,11 @@ plugins {
 
 sonar {
     properties {
-        property("sonar.projectKey", "EmKaaaM_MindScribe")
+        property("sonar.projectKey", "MindScribe")
         property("sonar.organization", "team13")
-//        property("sonar.gradle.skipCompile", "true")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.sources", listOf("code/MindScribe"))
     }
 }
-
 android {
     namespace = "com.example.mindscribe"
     compileSdk = 34
