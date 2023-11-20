@@ -1,8 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MindScribe" parent="Theme.Material3.DayNight.NoActionBar">
+
+    <color name="custom_color">#666666</color>
+    <color name="custom_darker_color">#376289</color>
+    <color name="custom_accent_color">#93BDFC</color>
+    <style name="Theme1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/custom_color</item>
+        <item name="colorPrimaryDark">@color/custom_darker_color</item>
+        <item name="colorAccent">@color/custom_accent_color</item>
     </style>
 
     <style name="Theme.MindScribe" parent="Base.Theme.MindScribe" />
