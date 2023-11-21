@@ -13,7 +13,7 @@
         android:theme="@style/Theme1"
         tools:targetApi="31">
         <activity
-            android:name=".calendarActivity"
+            android:name=".CalendarActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
