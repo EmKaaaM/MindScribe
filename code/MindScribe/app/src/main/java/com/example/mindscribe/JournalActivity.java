@@ -6,10 +6,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class JournalActivity extends AppCompatActivity {
     private int m_year, m_month, m_dayOfMonth; //variables to store date
+    private JournalEntry m_journalEntry; //variable to store journal entry
 
     //called when activity is created
     @SuppressLint("SetTextI18n")
@@ -33,5 +35,11 @@ public class JournalActivity extends AppCompatActivity {
     //called when home button is clicked
     public void onBackBtnClick(View v){
         finish();
+    }
+
+    //called when save button is clicked
+    public void onSaveBtnClick(View v){
+        EditText editText = (EditText) findViewById(R.id.EntryEditText);
+        m_journalEntry = new JournalEntry(m_year, m_month, m_dayOfMonth, editText.getText().toString());
     }
 }

@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="0.98" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine3"
+        android:id="@+id/EntryEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="64dp"
@@ -48,15 +48,29 @@
 
     <Button
         android:id="@+id/backBtn"
-        android:layout_width="131dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
         android:onClick="onBackBtnClick"
         android:text="Calendar"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:icon="@android:drawable/ic_menu_revert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/EntryEditText" />
+
+    <Button
+        android:id="@+id/SaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSaveBtnClick"
+        android:text="Save"
+        app:icon="@android:drawable/ic_menu_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.83"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EntryEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
