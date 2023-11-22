@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CalendarView;
 
 import java.util.Calendar;
@@ -19,7 +20,6 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
         m_calendarView = (CalendarView) findViewById(R.id.calendarView); //initialize calendarView object
         m_calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -37,5 +37,10 @@ public class CalendarActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //called when home button is clicked
+    public void onHomeBtnClick(View v){
+        finish();
     }
 }
