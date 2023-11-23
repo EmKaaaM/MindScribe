@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     //called when activity is created
     @Override
@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //called when calendar button is clicked
-    public void calBtnOnClick(View v){
-        Intent intent = new Intent (MainActivity.this, CalendarActivity.class);
+    public void onCalBtnClick(View v){
+        Intent intent = new Intent (HomeActivity.this, CalendarActivity.class);
         startActivity(intent);
     }
 }
