@@ -8,12 +8,14 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    //called when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
+    //called when calendar button is clicked
     public void calBtnOnClick(View v){
         Intent intent = new Intent (MainActivity.this, CalendarActivity.class);
         startActivity(intent);
