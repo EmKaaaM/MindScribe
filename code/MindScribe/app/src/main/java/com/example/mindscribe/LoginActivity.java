@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         params.put("username", usernameTextView.getText().toString());
         params.put("password", passwordView.getText().toString());
 
-        JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(params),
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 response -> {
                     Log.d("COMP32", response.toString());
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }, error -> {
