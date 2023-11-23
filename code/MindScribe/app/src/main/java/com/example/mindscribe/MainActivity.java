@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //called when calendar button is clicked
-    public void calBtnOnClick(View v){
+    public void onCalBtnClick(View v){
         Intent intent = new Intent (MainActivity.this, CalendarActivity.class);
         startActivity(intent);
     }

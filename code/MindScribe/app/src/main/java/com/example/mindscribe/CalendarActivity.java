@@ -39,6 +39,11 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    //called when save button is clicked
+    public void onCalBtnClick(View v) {
+        //do nothing
+    }
+
     //called when home button is clicked
     public void onHomeBtnClick(View v){
         finish();
