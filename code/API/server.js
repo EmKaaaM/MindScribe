@@ -53,18 +53,23 @@ app.post('/login', async (req, res) => {
 app.post('/createAccount', async (req, res) => {
     await pool.connect()
 
-    const username = req.params.username
-    const password = req.params.password
+    const username = req.body.username
+    const password = req.body.password
 
     const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`)
-    if (rows.length === 0) {
-        res.status(200).send({body: 'Account created'})
-    }
-    else {
+    if (rows.length !== 0) {
         res.status(400).send({body: 'Username already exists'})
     }
 
-    //TODO create account
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+        if (err) {
+            res.status(400).send({body: 'Error occured during creation'})
+            return
+        }
+
+        await pool.query(`INSERT INTO users (username, password_hash) VALUES ('${username}', '${hash}')`)
+        res.status(200).send({body: 'Account created'})
+    })
 })
 
 const server = http.createServer(app)
