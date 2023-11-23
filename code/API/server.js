@@ -3,7 +3,10 @@ import http from 'http'
 import 'dotenv/config'
 import pkg from 'pg'
 import { createTerminus } from '@godaddy/terminus'
+import bcrypt from 'bcrypt'
 const { Pool } = pkg
+
+const saltRounds = 12;
 
 // pool of clients to connect to DB
 const pool = new Pool({
@@ -11,6 +14,7 @@ const pool = new Pool({
 })
 
 const app = express()
+app.use(express.json())
 
 // User endpoint
 app.get('/users/:id', async (req, res) => {
@@ -21,6 +25,46 @@ app.get('/users/:id', async (req, res) => {
     const user = rows.filter(user => Number(user.user_id) === id)
 
     res.send(user)
+})
+
+app.post('/login', async (req, res) => {
+    await pool.connect()
+
+    const username = req.body.username
+    const password = req.body.password
+
+    const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`);
+    if (rows.length === 0) {
+        res.status(401).send({body: 'Invalid Credentials'})
+        return
+    }
+
+    const dbPasswordHash = rows[0].password_hash
+    const dbPass = bcrypt.compareSync(password, dbPasswordHash)
+
+    if (dbPass) {
+        res.status(200).send({body: 'Login Succeeded'})
+    }
+    else {
+        res.status(401).send({body: 'Invalid Credentials'})
+    }
+})
+
+app.post('/createAccount', async (req, res) => {
+    await pool.connect()
+
+    const username = req.params.username
+    const password = req.params.password
+
+    const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`)
+    if (rows.length === 0) {
+        res.status(200).send({body: 'Account created'})
+    }
+    else {
+        res.status(400).send({body: 'Username already exists'})
+    }
+
+    //TODO create account
 })
 
 const server = http.createServer(app)
