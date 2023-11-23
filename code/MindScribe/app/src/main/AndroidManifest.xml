@@ -16,6 +16,9 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".JournalActivity" 
+            android:exported="false" />
+        <activity
             android:name=".CalendarActivity"
             android:exported="false" />
         <activity
