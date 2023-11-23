@@ -30,6 +30,9 @@ app.get('/users/:id', async (req, res) => {
 app.post('/login', async (req, res) => {
     await pool.connect()
 
+    console.log('request made')
+    console.log(req.params.username, req.body.username)
+
     const username = req.body.username
     const password = req.body.password
 
