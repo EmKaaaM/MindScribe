@@ -50,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                 }, error -> {
                     Log.d("COMP32", error.toString());
                     passwordView.setText("");
-                    usernameTextView.setText("incorrect!");
+                    usernameTextView.setText("");
+                    usernameTextView.setHint("Incorrect");
                 }){
         };
 
