@@ -75,6 +75,31 @@ app.post('/createAccount', async (req, res) => {
     })
 })
 
+app.get('/journals/:id', async (req, res) => {
+    await pool.connect()
+
+    const userId = req.params.id
+
+    const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
+
+    const keywordArray = rows.keywords.split(",")
+
+    res.send({...rows, keywords: keywordArray})
+})
+
+app.post('createJournal', async (req, res) => {
+    await pool.connect()
+
+    const entryText = req.body.entryText
+    const keywords = req.body.keywords
+    const mood = req.body.mood
+
+    // need to check if journal for current date already exists, and if so replace or reject request
+    await pool.query(`INSERT INTO journal_entries (entry_text, keywords, mood) VALUES ('${entryText}', '${keywords}', ${mood})`)
+
+    res.status(200).send({body: 'Journal Created'})
+})
+
 const server = http.createServer(app)
 
 // kills db connection when server is killed
