@@ -91,10 +91,11 @@ app.post('createJournal', async (req, res) => {
     await pool.connect()
 
     const entryText = req.body.entryText
-    const keywords = req.body.keywords
+    const keywords = req.body.keywords // to be in the format "keyword1,keyword2,keyword3"
     const mood = req.body.mood
+    // maybe add Date field to table?
 
-    // need to check if journal for current date already exists, and if so replace or reject request
+    // need to check if journal for current date already exists, and if so replace journal or reject request
     await pool.query(`INSERT INTO journal_entries (entry_text, keywords, mood) VALUES ('${entryText}', '${keywords}', ${mood})`)
 
     res.status(200).send({body: 'Journal Created'})
