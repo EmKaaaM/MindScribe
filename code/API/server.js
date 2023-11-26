@@ -84,7 +84,10 @@ app.get('/journals/:id', async (req, res) => {
     const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
 
     const response = rows.map(row => {
-        const keywordsArray = row.keywords.split(',')
+        let keywordsArray = []
+        if (row.keywords) {
+            keywordsArray = row.keywords.split(',')
+        }
         return {...row, keywords: keywordsArray}
     })
 
@@ -92,7 +95,7 @@ app.get('/journals/:id', async (req, res) => {
 })
 
 
-app.post('createJournal', async (req, res) => {
+app.post('/createJournal', async (req, res) => {
     await pool.connect()
 
     const entryText = req.body.entryText
@@ -100,9 +103,18 @@ app.post('createJournal', async (req, res) => {
     const mood = req.body.mood
     const userId = req.body.userId
 
-    await pool.query(`INSERT INTO journalentries (user_id, entry_text, keywords, mood) VALUES (${userId}, '${entryText}', '${keywords}', '${mood})'`)
+    try {
+        const text = 'INSERT INTO journalentries (user_id, entry_text, keywords, mood) VALUES ($1, $2, $3, $4)'
+        const values = [userId, entryText, keywords, mood]
 
-    res.status(200).send({body: 'Journal Created'})
+        await pool.query(text, values)
+        res.status(200).send({body: 'Journal Created'})
+    }
+    catch(e) {
+        console.log(e)
+        res.status(400).send({body: 'Something went wrong!'})
+    }
+
 })
 
 const server = http.createServer(app)
