@@ -31,6 +31,19 @@ public class CreateAccountActivity extends AppCompatActivity {
     public void onCreateBtnClick(View v) throws JSONException {
 
 
+        EditText usernameView = findViewById(R.id.usernameText);
+        EditText passwordView = findViewById(R.id.passwordText);
+        EditText ConfirmPasswordView = findViewById(R.id.confirmPassText);
+
+        if (passwordView.getText()==ConfirmPasswordView.getText()){
+            //Create the new account
+        }
+        else {
+            //Error, the password confirmation isn't correct
+            ConfirmPasswordView.setText("");
+            ConfirmPasswordView.setHint("Does not match");
+        }
+
 
     }
 
