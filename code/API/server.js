@@ -83,9 +83,12 @@ app.get('/journals/:id', async (req, res) => {
 
     const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
 
-    const keywordArray = rows.keywords.split(",")
+    const response = rows.map(row => {
+        const keywordsArray = row.keywords.split(',')
+        return {...row, keywords: keywordsArray}
+    })
 
-    res.send({...rows, keywords: keywordArray})
+    res.send(response)
 })
 
 
