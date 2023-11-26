@@ -33,15 +33,34 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         EditText usernameView = findViewById(R.id.usernameText);
         EditText passwordView = findViewById(R.id.passwordText);
-        EditText ConfirmPasswordView = findViewById(R.id.confirmPassText);
+        EditText confirmPasswordView = findViewById(R.id.confirmPassText);
 
-        if (passwordView.getText()==ConfirmPasswordView.getText()){
-            //Create the new account
+
+        if (passwordView.getText()==confirmPasswordView.getText()){
+            //Check if the username is already taken
+            Boolean nameTaken = false;
+
+            
+
+
+            if (!nameTaken){
+                //Create the new account
+
+
+            }
+            else {
+                //Reset values
+                usernameView.setText("");
+                usernameView.setHint("Username Taken");
+                passwordView.setText("");
+                confirmPasswordView.setText("");
+            }
+
         }
         else {
             //Error, the password confirmation isn't correct
-            ConfirmPasswordView.setText("");
-            ConfirmPasswordView.setHint("Does not match");
+            confirmPasswordView.setText("");
+            confirmPasswordView.setHint("Does not match");
         }
 
 
