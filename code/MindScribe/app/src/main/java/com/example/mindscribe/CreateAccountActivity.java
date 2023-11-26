@@ -40,7 +40,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             //Check if the username is already taken
             Boolean nameTaken = false;
 
-            
+
 
 
             if (!nameTaken){

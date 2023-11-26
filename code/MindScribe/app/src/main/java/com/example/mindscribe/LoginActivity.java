@@ -57,4 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
         requestQueue.add(request);
     }
+
+    public void onCreateAccCLick (View v) {
+
+        Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+        startActivity(intent);
+    }
+
 }
