@@ -28,7 +28,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String password = String.valueOf(passwordView.getText());
         String confirm = String.valueOf(confirmPasswordView.getText());
 
-        if (password.equals(confirm) && password.length() <0 ){
+        if (password.equals(confirm) && password.length() >0 ){
             //Check if the username is already taken
             Boolean nameTaken = false;
 
@@ -38,6 +38,9 @@ public class CreateAccountActivity extends AppCompatActivity {
             if (!nameTaken){
                 //Create the new account
 
+
+
+            finish();
 
             }
             else {
