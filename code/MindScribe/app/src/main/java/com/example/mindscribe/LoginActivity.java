@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 response -> {
-                    Log.d("COMP32", response.toString());
                     try {
                         String token = response.getString("token");
                         int userId = response.getInt("user_id"); // Retrieve the user ID from the response
