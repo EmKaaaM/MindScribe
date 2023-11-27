@@ -4,6 +4,8 @@ import 'dotenv/config'
 import pkg from 'pg'
 import { createTerminus } from '@godaddy/terminus'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 const { Pool } = pkg
 
 const saltRounds = 12;
@@ -46,10 +48,13 @@ app.post('/login', async (req, res) => {
     const dbPass = bcrypt.compareSync(password, dbPasswordHash)
 
     if (dbPass) {
-        res.status(200).send({body: 'Login Succeeded'})
-    }
-    else {
-        res.status(401).send({body: 'Invalid Credentials'})
+        const userId = rows[0].user_id
+        const token = jwt.sign({user_id: rows[0].user_id}, process.env.JWT_SECRET, {
+            expiresIn: '24h'
+        })
+        res.status(200).send({ token: token, user_id: userId, body: 'Login Succeeded' })
+    } else {
+        res.status(401).send({ body: 'Invalid Credentials' })
     }
 })
 
@@ -75,12 +80,82 @@ app.post('/createAccount', async (req, res) => {
     })
 })
 
+// get all journals connected to user
+app.get('/journals/:id', async (req, res) => {
+    await pool.connect()
+
+    const userId = req.params.id
+
+    const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
+
+    const response = rows.map(row => {
+        let keywordsArray = []
+        if (row.keywords) {
+            keywordsArray = row.keywords.split(',')
+        }
+        return {...row, keywords: keywordsArray}
+    })
+
+    res.send(response)
+})
+
+
+app.post('/createJournal', authenticateToken, async (req, res) => {
+    await pool.connect();
+
+    const { entryText, keywords, mood, userId, year, month, day } = req.body;
+
+    try {
+        console.log('Year:', year, 'Month:', month, 'Day:', day);
+        const entryDate = new Date(year, month - 1, day); // Adjust month since JavaScript Date months start at 0
+        console.log('Constructed Date:', entryDate);
+                // Check if an entry for this date and user already exists
+        const existingEntry = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
+
+        if (existingEntry.rows.length > 0) {
+            // Entry exists, update it
+            await pool.query(`UPDATE journalentries SET entry_text = $1, keywords = $2, mood = $3 WHERE user_id = $4 AND entry_date = $5`, [entryText, keywords, mood, userId, entryDate]);
+            console.log('Updated entry')
+        } else {
+            // No entry exists, insert a new one
+            await pool.query(`INSERT INTO journalentries (user_id, entry_text, keywords, mood, entry_date) VALUES ($1, $2, $3, $4, $5)`, [userId, entryText, keywords, mood, entryDate]);
+            console.log('Inserted new entry')
+        }
+        res.status(200).send({body: 'Journal entry processed'});
+    }
+    catch(e) {
+        console.log(e);
+        res.status(400).send({body: 'Something went wrong!'});
+    }
+});
+
+
+app.get('/getJournalEntry', async (req, res) => {
+    await pool.connect();
+
+    const { userId, year, month, day } = req.query;
+    const entryDate = new Date(year, month - 1, day);
+
+    try {
+        const { rows } = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
+
+        if (rows.length > 0) {
+            res.status(200).send(rows[0]);
+        } else {
+            res.status(404).send({body: 'No entry found for this date'});
+        }
+    } catch(e) {
+        console.log(e);
+        res.status(400).send({body: 'Something went wrong!'});
+    }
+});
+
+
 const server = http.createServer(app)
 
 // kills db connection when server is killed
 function onSignal () {
     console.log('server is starting cleanup')
-    
     return Promise.all([
         pool.end()
     ])
@@ -90,6 +165,21 @@ async function onHealthCheck () {
     // should check if DB connection is live
     return Promise.resolve(true)
 }
+
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+    if (token == null) return res.sendStatus(401); // if there isn't any token
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next(); // pass the execution off to whatever request the client intended
+    });
+}
+
 
 // automatically calls onSignal when server is killed
 createTerminus(server, {
