@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -19,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 response -> {
-                    Log.d("COMP32", response.toString());
                     try {
                         String token = response.getString("token");
                         int userId = response.getInt("user_id"); // Retrieve the user ID from the response
@@ -57,11 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
-            Log.d("COMP32", error.toString());
-            passwordView.setText("");
-            usernameTextView.setText("");
-            usernameTextView.setHint("Incorrect");
-        });
+                    passwordView.setText("");
+                    usernameTextView.setText("");
+                    usernameTextView.setHint("Incorrect");
+                }
+        );
 
         requestQueue.add(request);
     }
@@ -72,5 +69,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("jwt_token", token);
         editor.putInt("user_id", userId);
         editor.apply();
+    }
+
+    public void onCreateAccCLick (View v) {
+        Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+        startActivity(intent);
     }
 }

@@ -67,6 +67,7 @@ app.post('/createAccount', async (req, res) => {
     const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`)
     if (rows.length !== 0) {
         res.status(400).send({body: 'Username already exists'})
+        return
     }
 
     bcrypt.hash(password, saltRounds, async function (err, hash) {
