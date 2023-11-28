@@ -20,4 +20,8 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent (HomeActivity.this, CalendarActivity.class);
         startActivity(intent);
     }
+
+    public void onHomeBtnClick(View v){
+        //do nothing
+    }
 }
