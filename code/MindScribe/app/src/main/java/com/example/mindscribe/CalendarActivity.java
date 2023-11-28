@@ -45,9 +45,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     //called when home button is clicked
-    public void onHomeBtnClick(View v){
-        if(this.getClass().getSimpleName().equals("HomeActivity")){
-            return;
-        }else finish();
+    public void onHomeBtnClick(View v) {
+        finish();
     }
 }
