@@ -77,6 +77,7 @@ public class JournalActivity extends AppCompatActivity {
                 // Handle the error
             }
         }).start();
+        finish();
     }
     private void displayJournalEntry(int year, int month, int day) {
         // Check if the requested entry is already cached
