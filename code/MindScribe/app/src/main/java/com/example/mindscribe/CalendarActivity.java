@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -20,20 +21,30 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        m_calendarView = (CalendarView) findViewById(R.id.calendarView); //initialize calendarView object
+
+        m_calendarView = findViewById(R.id.calendarView);
         m_calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) { //when date is selected
-                if (m_year == year && m_month == month && m_dayOfMonth == dayOfMonth) { //if same date is selected go to journal activity
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                // Get the current date
+                Calendar currentDate = Calendar.getInstance();
+                int currentYear = currentDate.get(Calendar.YEAR);
+                int currentMonth = currentDate.get(Calendar.MONTH);
+                int currentDayOfMonth = currentDate.get(Calendar.DAY_OF_MONTH);
+
+                // Check if the selected date is not in the future
+                if ((year < currentYear) || (year == currentYear && month < currentMonth) ||
+                        (year == currentYear && month == currentMonth && dayOfMonth <= currentDayOfMonth)) {
+                    // Date is not in the future, proceed to JournalActivity
                     Intent intent = new Intent(CalendarActivity.this, JournalActivity.class);
-                    intent.putExtra("year", m_year);
-                    intent.putExtra("month", m_month);
-                    intent.putExtra("dayOfMonth", m_dayOfMonth);
+                    intent.putExtra("year", year);
+                    intent.putExtra("month", month);
+                    intent.putExtra("dayOfMonth", dayOfMonth);
                     startActivity(intent);
-                } else { //if different date is selected
-                    m_year = year;
-                    m_month = month;
-                    m_dayOfMonth = dayOfMonth;
+                } else {
+                    // Date is in the future, notify the user or take appropriate action
+                    Toast.makeText(CalendarActivity.this, "Cannot select a future date", Toast.LENGTH_SHORT).show();
+                    // Optionally, you can reset the CalendarView to the current date or take other actions.
                 }
             }
         });
