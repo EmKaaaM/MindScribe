@@ -108,7 +108,7 @@ app.post('/createJournal', authenticateToken, async (req, res) => {
 
     try {
         console.log('Year:', year, 'Month:', month, 'Day:', day);
-        const entryDate = new Date(year, month - 1, day); // Adjust month since JavaScript Date months start at 0
+        const entryDate = new Date(year, month, day); 
         console.log('Constructed Date:', entryDate);
                 // Check if an entry for this date and user already exists
         const existingEntry = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);

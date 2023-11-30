@@ -23,7 +23,6 @@ public class JournalActivity extends AppCompatActivity {
 
 
     //called when activity is created
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,8 @@ public class JournalActivity extends AppCompatActivity {
             m_month = intent.getIntExtra("month", -1);
             m_dayOfMonth = intent.getIntExtra("dayOfMonth", -1);
             TextView textView = findViewById(R.id.dateTextView);
-            textView.setText(m_month + "/" + m_dayOfMonth + "/" + m_year);
+            String dateString = String.format("%02d/%02d/%d", m_dayOfMonth, m_month + 1, m_year);
+            textView.setText(dateString);
         } else {
             // Handle the case where the Intent is null
         }
