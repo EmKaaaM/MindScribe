@@ -7,6 +7,15 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name ="moodHappy">Happy</string>#
+    <string name="moodSad">Sad</string>
+    <string name="moodLove">In Love</string>
+    <string name="moodTired">Tired</string>
+    <string name="moodAngry">Angry</string>
+    <string name="moodNervous">Nervous</string>
+    <string name="moodFedUp">Fed Up</string>
+    <string name="moodNeutral">Neutral</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

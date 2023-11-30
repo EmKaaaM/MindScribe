@@ -8,11 +8,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class JournalActivity extends AppCompatActivity {
     private int m_year, m_month, m_dayOfMonth; //variables to store date
@@ -20,6 +24,8 @@ public class JournalActivity extends AppCompatActivity {
     private final String apiUrl = "http://10.0.2.2:3001";
     private JournalEntry cachedJournalEntry = null;
     private int cachedYear = -1, cachedMonth = -1, cachedDay = -1;
+    public static int[] MOOD_IDS = { R.string.moodHappy, R.string.moodAngry, R.string.moodFedUp, R.string.moodLove, R.string.moodTired, R.string.moodNervous,
+                                    R.string.moodSad, R.string.moodNeutral};
 
 
     //called when activity is created
@@ -40,18 +46,25 @@ public class JournalActivity extends AppCompatActivity {
             // Handle the case where the Intent is null
         }
 
+        Spinner moodDropdown = findViewById(R.id.moodSpinner);
+        ArrayList<String> moods = new ArrayList<>();
+
+        for (int moodId : MOOD_IDS) {
+            moods.add(getString(moodId));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, moods);
+        moodDropdown.setAdapter(adapter);
+
         displayJournalEntry(m_year, m_month, m_dayOfMonth);
-
-
     }
-
 
     private int getCurrentUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.mindscribe", MODE_PRIVATE);
         return sharedPreferences.getInt("user_id", -1); // Default to -1 or any invalid value
     }
     //called when home button is clicked
-    public void onBackBtnClick(View v){
+    public void onBackBtnClick(View v) {
         finish();
     }
 
