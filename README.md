@@ -7,3 +7,12 @@ This Project consists of 3 main project folders, Application, API and Database. 
 The Application project is primarily the front end of the app where the UI and general functionality will be. This is done in Java.
 The Database project is the database which stores all the user data for the journals as well as the login information. Done in PostgreSQL.
 The API is what connects the Application to the Database and allows the transfer of data into the User interface. It is a REST API.
+
+## Getting Started
+1. Install NodeJS (https://nodejs.org/en/)
+2. In code/API run npm install
+3. In code/API create a file called .env and paste the text in the discord into it
+4. In code/API run npm start
+5. Create an account on the app and remember credentials
+6. Login to the app with the credentials
+7. Start journalling!
