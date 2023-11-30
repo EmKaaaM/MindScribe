@@ -13,8 +13,6 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class CalendarActivity extends AppCompatActivity {
-    private CalendarView m_calendarView; //calendarView object
-    private int m_year, m_month, m_dayOfMonth; //variables to store date
 
     //called when activity is created
     @Override
@@ -22,8 +20,8 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        m_calendarView = findViewById(R.id.calendarView);
-        m_calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 // Get the current date
