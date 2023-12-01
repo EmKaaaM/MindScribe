@@ -49,9 +49,9 @@ public class JournalService {
         entryJson.put("year", entry.getYear());
         entryJson.put("month", entry.getMonth());
         entryJson.put("day", entry.getDayOfMonth());
+        entryJson.put("mood", entry.getMood());
         // implement keywords and mood later on.
         // entryJson.put("keywords", entry.getKeywords());
-        // entryJson.put("mood", entry.getMood());
 
         RequestBody body = RequestBody.create(entryJson.toString(), JSON);
         Request request = new Request.Builder()

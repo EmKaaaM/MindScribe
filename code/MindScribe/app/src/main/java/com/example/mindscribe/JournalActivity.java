@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -26,6 +27,7 @@ public class JournalActivity extends AppCompatActivity {
     private int cachedYear = -1, cachedMonth = -1, cachedDay = -1;
     public static int[] MOOD_IDS = { R.string.moodHappy, R.string.moodAngry, R.string.moodFedUp, R.string.moodLove, R.string.moodTired, R.string.moodNervous,
                                     R.string.moodSad, R.string.moodNeutral};
+    public ArrayList<String> moods = new ArrayList<>();
 
 
     //called when activity is created
@@ -47,7 +49,6 @@ public class JournalActivity extends AppCompatActivity {
         }
 
         Spinner moodDropdown = findViewById(R.id.moodSpinner);
-        ArrayList<String> moods = new ArrayList<>();
 
         for (int moodId : MOOD_IDS) {
             moods.add(getString(moodId));
@@ -77,7 +78,11 @@ public class JournalActivity extends AppCompatActivity {
             // Handle error: User ID is not set or invalid
             return;
         }
-        m_journalEntry = new JournalEntry(m_year, m_month, m_dayOfMonth, editText.getText().toString(), userId);
+
+        Spinner moodSpinner = findViewById(R.id.moodSpinner);
+        String mood = moodSpinner.getSelectedItem().toString();
+
+        m_journalEntry = new JournalEntry(m_year, m_month, m_dayOfMonth, editText.getText().toString(), userId, mood);
 
         // Rest of your code to send the entry
         JournalService journalService = new JournalService(this, apiUrl);
@@ -109,8 +114,9 @@ public class JournalActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
                         String entryText = jsonResponse.getString("entry_text");
+                        String mood = jsonResponse.getString("mood");
                         // Cache the fetched entry
-                        cachedJournalEntry = new JournalEntry(year, month, day, entryText, userId);
+                        cachedJournalEntry = new JournalEntry(year, month, day, entryText, userId, mood);
                         cachedYear = year;
                         cachedMonth = month;
                         cachedDay = day;
@@ -130,6 +136,9 @@ public class JournalActivity extends AppCompatActivity {
     private void updateUIWithJournalEntry(JournalEntry journalEntry) {
         EditText editText = findViewById(R.id.EntryEditText);
         editText.setText(journalEntry.getEntry());
+
+        Spinner moodSpinner = findViewById(R.id.moodSpinner);
+        moodSpinner.setSelection(moods.indexOf(journalEntry.getMood()));
     }
     private void showNoEntryMessage() {
         EditText editText = findViewById(R.id.EntryEditText);
