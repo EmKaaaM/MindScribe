@@ -2,17 +2,18 @@ package com.example.mindscribe;
 
 public class JournalEntry {
     private int m_year, m_month, m_dayOfMonth, m_userID; //variables to store date
-    private String m_mood;
-    String entry; //variable to store entry
+    private String m_mood, m_keywords;
+    String m_entry; //variable to store entry
 
     //constructor
-    public JournalEntry(int year, int month, int dayOfMonth, String entry, int userId, String mood) {
+    public JournalEntry(int year, int month, int dayOfMonth, String entry, int userId, String mood, String keywords) {
         m_year = year;
         m_month = month;
         m_dayOfMonth = dayOfMonth;
-        this.entry = entry;
-        this.m_userID = userId;
+        m_entry = entry;
+        m_userID = userId;
         m_mood = mood;
+        m_keywords = keywords;
     }
 
     //getters
@@ -33,7 +34,11 @@ public class JournalEntry {
     }
 
     public String getEntry(){
-        return entry;
+        return m_entry;
+    }
+
+    public String getKeywords() {
+        return m_keywords;
     }
 
     //setters
@@ -53,12 +58,16 @@ public class JournalEntry {
         m_mood = mood;
     }
 
+    public void setKeywords(String keywords) {
+        m_keywords = keywords;
+    }
+
     public void setEntry(String entry){
-        this.entry = entry;
+        m_entry = entry;
     }
 
     public void setUserID(int userID){
-        this.m_userID = userID;
+        m_userID = userID;
     }
 
     public int getUserID(){

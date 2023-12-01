@@ -37,8 +37,7 @@
         android:id="@+id/EntryEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="100dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -50,7 +49,7 @@
     <Button
         android:id="@+id/backBtn"
         android:layout_width="wrap_content"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
         android:onClick="onBackBtnClick"
         android:text="Calendar"
         android:textSize="14sp"
@@ -58,8 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EntryEditText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/SaveBtn"
@@ -71,8 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.83"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EntryEditText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/moodSpinner"
@@ -90,9 +87,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mood"
+        android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/moodSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/moodSpinner" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/KeywordsView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:hint="@string/keywordsHint"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/EntryEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/moodSpinner"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/keywords"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/KeywordsView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/KeywordsView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

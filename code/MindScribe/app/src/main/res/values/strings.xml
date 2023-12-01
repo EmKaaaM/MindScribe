@@ -16,6 +16,8 @@
     <string name="moodFedUp">Fed Up</string>
     <string name="moodNeutral">Neutral</string>
     <string name="mood">Mood:</string>
+    <string name="keywords">Keywords:</string>
+    <string name="keywordsHint">Write comma-separated keywords</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
