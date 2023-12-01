@@ -124,6 +124,9 @@ public class JournalActivity extends AppCompatActivity {
                         String entryText = jsonResponse.getString("entry_text");
                         String mood = jsonResponse.getString("mood");
                         String keywords = jsonResponse.getString("keywords");
+                        if (keywords.equals("null")) {
+                            keywords = "";
+                        }
                         // Cache the fetched entry
                         cachedJournalEntry = new JournalEntry(year, month, day, entryText, userId, mood, keywords);
                         cachedYear = year;
