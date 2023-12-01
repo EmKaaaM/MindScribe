@@ -134,11 +134,16 @@ app.post('/createJournal', authenticateToken, async (req, res) => {
 app.get('/getJournalEntry', async (req, res) => {
     await pool.connect();
 
+    console.log('getting journal entry', req.query)
+
     const { userId, year, month, day } = req.query;
-    const entryDate = new Date(year, month - 1, day);
+    const entryDate = new Date(year, month - 1, day + 1);
+    console.log(entryDate)
 
     try {
         const { rows } = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
+
+        console.log(rows)
 
         if (rows.length > 0) {
             res.status(200).send(rows[0]);
