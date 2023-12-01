@@ -89,15 +89,7 @@ app.get('/journals/:id', async (req, res) => {
 
     const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
 
-    const response = rows.map(row => {
-        let keywordsArray = []
-        if (row.keywords) {
-            keywordsArray = row.keywords.split(',')
-        }
-        return {...row, keywords: keywordsArray}
-    })
-
-    res.send(response)
+    res.send(rows)
 })
 
 
@@ -135,7 +127,7 @@ app.get('/getJournalEntry', async (req, res) => {
     await pool.connect();
 
     const { userId, year, month, day } = req.query;
-    const entryDate = new Date(year, month - 1, day);
+    const entryDate = new Date(year, month, day);
 
     try {
         const { rows } = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
