@@ -49,14 +49,6 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/chatBotBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Chat Bot"
-                android:textSize="12sp" />
-
-            <Button
                 android:id="@+id/helpBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
