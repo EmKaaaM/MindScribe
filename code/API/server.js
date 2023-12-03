@@ -20,8 +20,6 @@ app.use(express.json())
 
 // User endpoint
 app.get('/users/:id', async (req, res) => {
-    await pool.connect()
-
     const { rows } = await pool.query('SELECT * FROM users')
     const id = Number(req.params.id)
     const user = rows.filter(user => Number(user.user_id) === id)
@@ -30,8 +28,6 @@ app.get('/users/:id', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    await pool.connect()
-
     console.log('request made')
     console.log(req.params.username, req.body.username)
 
@@ -41,6 +37,7 @@ app.post('/login', async (req, res) => {
     const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`);
     if (rows.length === 0) {
         res.status(401).send({body: 'Invalid Credentials'})
+        await pool.release()
         return
     }
 
@@ -59,32 +56,34 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/createAccount', async (req, res) => {
-    await pool.connect()
+    const client = await pool.connect()
 
     const username = req.body.username
     const password = req.body.password
 
-    const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`)
+    const { rows } = await client.query(`SELECT * FROM users WHERE username = '${username}'`)
     if (rows.length !== 0) {
         res.status(400).send({body: 'Username already exists'})
+        client.release()
         return
     }
 
     bcrypt.hash(password, saltRounds, async function (err, hash) {
         if (err) {
             res.status(400).send({body: 'Error occured during creation'})
+            client.release()
             return
         }
 
-        await pool.query(`INSERT INTO users (username, password_hash) VALUES ('${username}', '${hash}')`)
+        await client.query(`INSERT INTO users (username, password_hash) VALUES ('${username}', '${hash}')`)
         res.status(200).send({body: 'Account created'})
     })
+
+    client.release()
 })
 
 // get all journals connected to user
 app.get('/journals/:id', async (req, res) => {
-    await pool.connect()
-
     const userId = req.params.id
 
     const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
@@ -94,7 +93,7 @@ app.get('/journals/:id', async (req, res) => {
 
 
 app.post('/createJournal', authenticateToken, async (req, res) => {
-    await pool.connect();
+    const client = await pool.connect();
 
     const { entryText, keywords, mood, userId, year, month, day } = req.body;
 
@@ -103,15 +102,15 @@ app.post('/createJournal', authenticateToken, async (req, res) => {
         const entryDate = new Date(year, month, day); 
         console.log('Constructed Date:', entryDate);
                 // Check if an entry for this date and user already exists
-        const existingEntry = await pool.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
+        const existingEntry = await client.query(`SELECT * FROM journalentries WHERE user_id = $1 AND entry_date = $2`, [userId, entryDate]);
 
         if (existingEntry.rows.length > 0) {
             // Entry exists, update it
-            await pool.query(`UPDATE journalentries SET entry_text = $1, keywords = $2, mood = $3 WHERE user_id = $4 AND entry_date = $5`, [entryText, keywords, mood, userId, entryDate]);
+            await client.query(`UPDATE journalentries SET entry_text = $1, keywords = $2, mood = $3 WHERE user_id = $4 AND entry_date = $5`, [entryText, keywords, mood, userId, entryDate]);
             console.log('Updated entry')
         } else {
             // No entry exists, insert a new one
-            await pool.query(`INSERT INTO journalentries (user_id, entry_text, keywords, mood, entry_date) VALUES ($1, $2, $3, $4, $5)`, [userId, entryText, keywords, mood, entryDate]);
+            await client.query(`INSERT INTO journalentries (user_id, entry_text, keywords, mood, entry_date) VALUES ($1, $2, $3, $4, $5)`, [userId, entryText, keywords, mood, entryDate]);
             console.log('Inserted new entry')
         }
         res.status(200).send({body: 'Journal entry processed'});
@@ -120,12 +119,12 @@ app.post('/createJournal', authenticateToken, async (req, res) => {
         console.log(e);
         res.status(400).send({body: 'Something went wrong!'});
     }
+
+    client.release()
 });
 
 
 app.get('/getJournalEntry', async (req, res) => {
-    await pool.connect();
-
     const { userId, year, month, day } = req.query;
     const entryDate = new Date(year, month, day);
 
