@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,7 +46,11 @@ public class CreateAccountActivity extends AppCompatActivity {
             params.put("password", password);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
-                    response -> finish(),
+                    response -> {
+                        // Show a success message
+                        Toast.makeText(getApplicationContext(), "Account created successfully!", Toast.LENGTH_LONG).show();
+                        finish();
+                    },
                     error -> {
                         try {
                             // parse error message
@@ -59,18 +64,18 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             // determine what caused the error and display to user
                             if (response.getBody().equals("Username already exists")) {
-                                usernameView.setHint("Username Taken");
+                                usernameView.setError("Username Taken");
                             }
                             else {
-                                usernameView.setHint("Something went wrong! Try again.");
+                                usernameView.setError("Something went wrong! Try again.");
                             }
                         }
                         catch (Exception e) {
                             // if parsing goes wrong, just clear all fields
                             usernameView.setText("");
-                            usernameView.setHint("Something went wrong! Try again.");
                             passwordView.setText("");
                             confirmPasswordView.setText("");
+                            usernameView.setError("Something went wrong! Try again.");
                         }
                     }
             );
@@ -81,7 +86,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         else {
             //Error, the password confirmation isn't correct
             confirmPasswordView.setText("");
-            confirmPasswordView.setHint("Passwords don't match");
+            confirmPasswordView.setError("Passwords don't match");
         }
     }
 

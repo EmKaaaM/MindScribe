@@ -54,9 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
-                    passwordView.setText("");
-                    usernameTextView.setText("");
-                    usernameTextView.setHint("Incorrect");
+                    passwordView.setError("Password or Username are incorrect");
                 }
         );
 

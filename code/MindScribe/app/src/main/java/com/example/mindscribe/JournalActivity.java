@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +58,7 @@ public class JournalActivity extends AppCompatActivity {
 
     //called when save button is clicked
     public void onSaveBtnClick(View v) {
+        Toast.makeText(getApplicationContext(), "Entry Saved!", Toast.LENGTH_LONG).show();
         EditText editText = findViewById(R.id.EntryEditText);
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.mindscribe", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("user_id", -1);  // '-1' as a default value indicating 'not found'
