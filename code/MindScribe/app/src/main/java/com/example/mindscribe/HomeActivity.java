@@ -71,12 +71,14 @@ public class HomeActivity extends AppCompatActivity {
     private void getCurrentEntry() {
         JournalService journalService = new JournalService(this, apiUrl);
         // Attempt to set the current entry on the homepage, or set a placeholder if not
-        try {
-            String entry = journalService.fetchJournalEntry(userID, year, month, day);
-            textView.setText(entry);
-        } catch (Exception E) {
-            textView.setText("");
-            textView.setHint("Perhaps there is no entry for today.");
-        }
+        new Thread(() -> {
+            try {
+                String entry = journalService.fetchJournalEntry(userID, year, month, day);
+                textView.setText(entry);
+            } catch (Exception E) {
+                textView.setText("");
+                textView.setHint("Perhaps there is no entry for today.");
+            }
+        }).start();
     }
 }
