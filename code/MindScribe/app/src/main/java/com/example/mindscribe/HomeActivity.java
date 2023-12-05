@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
@@ -16,8 +18,10 @@ import java.util.Calendar;
 public class HomeActivity extends AppCompatActivity {
 
     private final String apiUrl = "http://10.0.2.2:3001";
+    private JournalEntry cachedEntry = null;
+    private int cachedYear = -1, cachedMonth = -1, cachedDay = -1;
 
-    private TextView textView;
+    private TextView entryText, moodText, keywordText;
     private int userID;
     private int year;
     private int month;
@@ -28,7 +32,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.homePageEntry);
+        entryText = findViewById(R.id.homePageEntry);
+        moodText = findViewById(R.id.homePageMood);
+        keywordText = findViewById(R.id.homePageKeyword);
         // Fetch user ID to allow for the current entry to be shown
         userID = getCurrentUserId();
         Calendar currentDate = Calendar.getInstance();
@@ -74,11 +80,42 @@ public class HomeActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 String entry = journalService.fetchJournalEntry(userID, year, month, day);
-                textView.setText(entry);
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(entry);
+                        String entryText = jsonResponse.getString("entry_text");
+                        String mood = jsonResponse.getString("mood");
+                        String keywords = jsonResponse.getString("keywords");
+                        // Cache and update the entry
+                        cachedEntry = new JournalEntry(year, month, day, entryText, userID, mood, keywords);
+                        cachedYear = year;
+                        cachedMonth = month;
+                        cachedDay = day;
+                        updateCurrentEntry(cachedEntry);
+                    } catch (JSONException e) {
+                        // Handle JSON parsing error
+                        entryText.setText("");
+                        entryText.setHint("Perhaps there is no entry for today.");
+                        moodText.setText("");
+                        moodText.setHint("There is no mood set for today.");
+                        keywordText.setText("");
+                        keywordText.setHint("There is no keywords set for today.");
+                    }
+                });
             } catch (Exception E) {
-                textView.setText("");
-                textView.setHint("Perhaps there is no entry for today.");
+                // Handle network error
+                entryText.setText("");
+                entryText.setHint("Perhaps there is no entry for today.");
+                moodText.setText("");
+                moodText.setHint("There is no mood set for today.");
+                keywordText.setText("");
+                keywordText.setHint("There is no keywords set for today.");
             }
         }).start();
+    }
+    private void updateCurrentEntry(JournalEntry entry) {
+        moodText.setText(entry.getMood());
+        keywordText.setText(entry.getKeywords());
+        entryText.setText(entry.getEntry());
     }
 }
