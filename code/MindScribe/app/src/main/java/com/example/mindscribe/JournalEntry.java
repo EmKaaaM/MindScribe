@@ -1,22 +1,19 @@
 package com.example.mindscribe;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import org.json.JSONObject;
+
 public class JournalEntry {
-    private int m_year, m_month, m_dayOfMonth; //variables to store date
-    String entry; //variable to store entry
-    private int userID;
+    private int m_year, m_month, m_dayOfMonth, m_userID; //variables to store date
+    private String m_mood, m_keywords;
+    String m_entry; //variable to store entry
 
     //constructor
-    public JournalEntry(int year, int month, int dayOfMonth, String entry, int userId) {
+    public JournalEntry(int year, int month, int dayOfMonth, String entry, int userId, String mood, String keywords) {
         m_year = year;
         m_month = month;
         m_dayOfMonth = dayOfMonth;
-        this.entry = entry;
-        this.userID = userId;
+        m_entry = entry;
+        m_userID = userId;
+        m_mood = mood;
+        m_keywords = keywords;
     }
 
     //getters
@@ -32,8 +29,16 @@ public class JournalEntry {
         return m_dayOfMonth;
     }
 
+    public String getMood() {
+        return m_mood;
+    }
+
     public String getEntry(){
-        return entry;
+        return m_entry;
+    }
+
+    public String getKeywords() {
+        return m_keywords;
     }
 
     //setters
@@ -49,16 +54,24 @@ public class JournalEntry {
         m_dayOfMonth = dayOfMonth;
     }
 
+    public void setMood(String mood) {
+        m_mood = mood;
+    }
+
+    public void setKeywords(String keywords) {
+        m_keywords = keywords;
+    }
+
     public void setEntry(String entry){
-        this.entry = entry;
+        m_entry = entry;
     }
 
     public void setUserID(int userID){
-        this.userID = userID;
+        m_userID = userID;
     }
 
     public int getUserID(){
-        return userID;
+        return m_userID;
     }
 
 }
