@@ -17,7 +17,7 @@ public class JournalService {
     private final Context context;
     private String apiUrl = "http://10.0.2.2:3001";
 
-
+    // Constructor
     public JournalService(Context context, String apiUrl) {
         this.context = context;
         this.apiUrl = apiUrl;
@@ -28,12 +28,13 @@ public class JournalService {
         this.client = builder.build();
     }
 
-
+    // Store the token and user ID in SharedPreferences
     private String getToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.mindscribe", Context.MODE_PRIVATE);
         return sharedPreferences.getString("jwt_token", null);
     }
 
+    // Example method to create a journal entry
     public String createJournalEntry(JournalEntry entry) throws Exception {
         String token = getToken();
         if (token == null) {

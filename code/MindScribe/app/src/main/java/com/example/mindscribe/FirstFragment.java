@@ -13,8 +13,9 @@ import com.example.mindscribe.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private FragmentFirstBinding binding; // Binding object
 
+    // Called when the view is created
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -26,6 +27,7 @@ public class FirstFragment extends Fragment {
 
     }
 
+    // Called when the view is created
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -38,6 +40,7 @@ public class FirstFragment extends Fragment {
         });
     }
 
+    // Called when the view is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
+    // OnCreate method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
 
+    // Method is called when the user clicks the create account button
     public void onCreateBtnClick(View v) throws JSONException {
         EditText usernameView = findViewById(R.id.usernameText);
         EditText passwordView = findViewById(R.id.createpasswordText);

@@ -21,14 +21,18 @@ import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // URL of the login endpoint
     String url = "http://10.0.2.2:3001/login";
 
+
+    // OnCreate method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
 
+    // Method is called when the user clicks the login button
     public void onLoginBtnClick(View v) throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -63,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    // Store the token and user ID in SharedPreferences
     private void storeTokenAndUserId(String token, int userId) {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.mindscribe", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -71,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // Method is called when the user clicks the create account button
     public void onCreateAccCLick (View v) {
         Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
         startActivity(intent);
