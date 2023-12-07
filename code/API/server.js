@@ -19,7 +19,7 @@ const app = express()
 app.use(express.json())
 
 // User endpoint
-app.get('/users/:id', async (req, res) => {
+app.get('/users/:id', authenticateToken, async (req, res) => {
     const { rows } = await pool.query('SELECT * FROM users')
     const id = Number(req.params.id)
     const user = rows.filter(user => Number(user.user_id) === id)
@@ -28,13 +28,10 @@ app.get('/users/:id', async (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    console.log('request made')
-    console.log(req.params.username, req.body.username)
-
     const username = req.body.username
     const password = req.body.password
 
-    const { rows } = await pool.query(`SELECT * FROM users WHERE username = '${username}'`);
+    const { rows } = await pool.query(`SELECT * FROM users WHERE username = $1`, [username]);
     if (rows.length === 0) {
         res.status(401).send({body: 'Invalid Credentials'})
         await pool.release()
@@ -61,7 +58,7 @@ app.post('/createAccount', async (req, res) => {
     const username = req.body.username
     const password = req.body.password
 
-    const { rows } = await client.query(`SELECT * FROM users WHERE username = '${username}'`)
+    const { rows } = await client.query(`SELECT * FROM users WHERE username = $1`, [username])
     if (rows.length !== 0) {
         res.status(400).send({body: 'Username already exists'})
         client.release()
@@ -75,7 +72,7 @@ app.post('/createAccount', async (req, res) => {
             return
         }
 
-        await client.query(`INSERT INTO users (username, password_hash) VALUES ('${username}', '${hash}')`)
+        await client.query(`INSERT INTO users (username, password_hash) VALUES ($1, $2)`, [username, hash])
         res.status(200).send({body: 'Account created'})
     })
 
@@ -83,10 +80,10 @@ app.post('/createAccount', async (req, res) => {
 })
 
 // get all journals connected to user
-app.get('/journals/:id', async (req, res) => {
+app.get('/journals/:id', authenticateToken, async (req, res) => {
     const userId = req.params.id
 
-    const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = ${userId}`)
+    const { rows } = await pool.query(`SELECT * FROM journalentries where user_id = $1`, [userId])
 
     res.send(rows)
 })
@@ -124,7 +121,7 @@ app.post('/createJournal', authenticateToken, async (req, res) => {
 });
 
 
-app.get('/getJournalEntry', async (req, res) => {
+app.get('/getJournalEntry', authenticateToken, async (req, res) => {
     const { userId, year, month, day } = req.query;
     const entryDate = new Date(year, month, day);
 
