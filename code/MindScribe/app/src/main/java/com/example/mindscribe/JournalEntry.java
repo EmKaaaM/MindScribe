@@ -2,7 +2,7 @@ package com.example.mindscribe;
 
 public class JournalEntry {
     private int m_year, m_month, m_dayOfMonth, m_userID; //variables to store date
-    private String m_mood, m_keywords;
+    private String m_mood, m_keywords; //variables to store mood and keywords
     String m_entry; //variable to store entry
 
     //constructor

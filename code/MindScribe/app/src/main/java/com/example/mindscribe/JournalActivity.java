@@ -20,13 +20,13 @@ import java.util.ArrayList;
 public class JournalActivity extends AppCompatActivity {
     private int m_year, m_month, m_dayOfMonth; //variables to store date
     private JournalEntry m_journalEntry; //variable to store journal entry
-    private final String apiUrl = "http://10.0.2.2:3001";
-    private JournalEntry cachedJournalEntry = null;
-    private int cachedYear = -1, cachedMonth = -1, cachedDay = -1;
+    private final String apiUrl = "http://10.0.2.2:3001"; // URL of the API
+    private JournalEntry cachedJournalEntry = null; // Cache the fetched entry
+    private int cachedYear = -1, cachedMonth = -1, cachedDay = -1; // Cache the fetched entry
     public static int[] MOOD_IDS = { R.string.moodHappy, R.string.moodAngry, R.string.moodFedUp, R.string.moodLove, R.string.moodTired, R.string.moodNervous,
-                                    R.string.moodSad, R.string.moodNeutral};
-    public ArrayList<String> moods = new ArrayList<>();
-    public static final String[] KEYWORDS = { "Work", "School", "Home" };
+                                    R.string.moodSad, R.string.moodNeutral}; //array of mood ids
+    public ArrayList<String> moods = new ArrayList<>(); //arraylist of moods
+    public static final String[] KEYWORDS = { "Work", "School", "Home" }; //array of keywords
 
 
     //called when activity is created
@@ -65,10 +65,12 @@ public class JournalActivity extends AppCompatActivity {
         displayJournalEntry(m_year, m_month, m_dayOfMonth);
     }
 
+    // Store the token and user ID in SharedPreferences
     private int getCurrentUserId() {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.mindscribe", MODE_PRIVATE);
         return sharedPreferences.getInt("user_id", -1); // Default to -1 or any invalid value
     }
+
     //called when home button is clicked
     public void onBackBtnClick(View v) {
         finish();
@@ -105,6 +107,8 @@ public class JournalActivity extends AppCompatActivity {
         }).start();
         finish();
     }
+
+    //called when delete button is clicked
     private void displayJournalEntry(int year, int month, int day) {
         // Check if the requested entry is already cached
         if (year == cachedYear && month == cachedMonth && day == cachedDay && cachedJournalEntry != null) {
@@ -142,6 +146,8 @@ public class JournalActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    // Update the UI with the journal entry
     private void updateUIWithJournalEntry(JournalEntry journalEntry) {
         EditText editText = findViewById(R.id.EntryEditText);
         editText.setText(journalEntry.getEntry());
@@ -152,12 +158,15 @@ public class JournalActivity extends AppCompatActivity {
         MultiAutoCompleteTextView keywordsView = findViewById(R.id.KeywordsView);
         keywordsView.setText(journalEntry.getKeywords());
     }
+
+    // Show a message indicating that there is no entry for the requested date
     private void showNoEntryMessage() {
         EditText editText = findViewById(R.id.EntryEditText);
         editText.setText(""); // Clear any existing text
         editText.setHint("Perhaps there is no entry yet for this date.");
     }
 
+    // Show a message indicating that there is no entry for the requested date
     private void showErrorMessage() {
         EditText editText = findViewById(R.id.EntryEditText);
         editText.setText(""); // Clear any existing text

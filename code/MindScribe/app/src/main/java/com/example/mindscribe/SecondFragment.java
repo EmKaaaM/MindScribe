@@ -13,8 +13,9 @@ import com.example.mindscribe.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
 
-    private FragmentSecondBinding binding;
+    private FragmentSecondBinding binding; // Binding object
 
+    // Called when the view is created
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -26,6 +27,7 @@ public class SecondFragment extends Fragment {
 
     }
 
+    // Called when the view is created
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -38,6 +40,7 @@ public class SecondFragment extends Fragment {
         });
     }
 
+    // Called when the view is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -49,14 +49,6 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/chatBotBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Chat Bot"
-                android:textSize="12sp" />
-
-            <Button
                 android:id="@+id/helpBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -91,5 +83,120 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
+
+    <Button
+        android:id="@+id/todayBtn"
+        android:layout_width="332dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="592dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="79dp"
+        android:onClick="onTodayBtnClick"
+        android:text="To Today's Entry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/homePageEntry"
+        android:layout_width="330dp"
+        android:layout_height="207dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="364dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="160dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/homePageMood"
+        android:layout_width="330dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="505dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/homePageKeyword"
+        android:layout_width="330dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="275dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="410dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleEntry"
+        android:layout_width="71dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="335dp"
+        android:layout_marginEnd="305dp"
+        android:layout_marginBottom="374dp"
+        android:text="Entry"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleMood"
+        android:layout_width="48dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="156dp"
+        android:layout_marginEnd="325dp"
+        android:layout_marginBottom="555dp"
+        android:text="Mood"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleKeyword"
+        android:layout_width="86dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="242dp"
+        android:layout_marginEnd="290dp"
+        android:layout_marginBottom="467dp"
+        android:text="Keywords"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/todayTitle"
+        android:layout_width="330dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="590dp"
+        android:text="Today's Journal Entry"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
