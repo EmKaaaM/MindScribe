@@ -78,7 +78,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             );
 
             requestQueue.add(request);
-            finish();
         }
         else {
             //Error, the password confirmation isn't correct

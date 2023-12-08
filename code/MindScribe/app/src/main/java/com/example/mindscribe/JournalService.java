@@ -29,7 +29,7 @@ public class JournalService {
     }
 
     // Store the token and user ID in SharedPreferences
-    private String getToken() {
+    protected String getToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.mindscribe", Context.MODE_PRIVATE);
         return sharedPreferences.getString("jwt_token", null);
     }
